@@ -1,8 +1,8 @@
 Accessibility Driver
 ====================
 
-A selenium webdriver implementation which will produce an HTML accessibility report using google accessibility developer
-tools
+A selenium webdriver implementation which will produce an HTML accessibility report using
+[google accessibility developer tools](https://github.com/GoogleChrome/accessibility-developer-tools)
 
 Requirements
 ------------
