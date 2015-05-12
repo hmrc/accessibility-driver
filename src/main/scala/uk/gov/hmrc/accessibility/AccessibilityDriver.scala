@@ -72,7 +72,6 @@ class AccessibilityDriver(val port: Int = 8080) extends WebDriver with Javascrip
 
   override def quit(): Unit = {
     interceptedPages.put(StopMessage)
-    Thread.sleep(2000)
     delegate.quit()
   }
 

@@ -27,7 +27,7 @@ Reports
 
 The reports produced will end up in
 
-    target/accessibility-reports/[timestamp]/report.html
+    target/accessibility-reports/[timestamp]/index.html
 
 Packaging
 ---------

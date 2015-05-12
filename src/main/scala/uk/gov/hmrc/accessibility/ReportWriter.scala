@@ -78,7 +78,7 @@ object ReportWriter {
         |  <frame name="report">
         |</frameset>""".stripMargin
 
-    withFileWriter(targetDir+runStamp, "report.html") { writer =>
+    withFileWriter(targetDir+runStamp, "index.html") { writer =>
       writer.write( frames )
     }
   }
