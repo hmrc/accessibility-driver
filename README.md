@@ -21,7 +21,14 @@ Usage
     (run tests)
     
     driver.quit //The quit command triggers the production of the report, make sure you quit the driver after testing
-    
+
+Reports
+-------
+
+The reports produced will end up in
+
+    target/accessibility-reports/[timestamp]/report.html
+
 Packaging
 ---------
 
