@@ -11,7 +11,7 @@ PhantomJS must be installed, e.g.
 
     brew install phantomjs
     
-    (add linus instructions)
+    (add linux instructions)
     
 Usage
 -----
@@ -76,3 +76,12 @@ To enable logging of the underlying proxy server, use the following example conf
             <appender-ref ref="ASYNC"/>
         </root>
     </log4j:configuration>
+    
+Suggested Future Improvements
+-----------------------------
+
+ * Configurable url(s) for report execution, i.e. a whitelisting feature
+ * Support for other delegate drivers (currently hardcoded to use FirefoxDriver)
+ * Some tests
+ * Parsing of reports so we can get some metrics e.g. number of warnings
+ * Dont run reports on the same page twice (check the page md5 hash)
