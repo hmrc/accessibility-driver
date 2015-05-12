@@ -1,5 +1,5 @@
-Proxibility Driver
-==================
+Accessibility Driver
+====================
 
 A selenium webdriver implementation which will produce an HTML accessibility report using google accessibility developer
 tools
@@ -16,7 +16,7 @@ PhantomJS must be installed, e.g.
 Usage
 -----
 
-    val driver = new ProxibilityDriver
+    val driver = new AccessibilityDriver
     
     (run tests)
     
