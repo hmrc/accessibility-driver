@@ -21,7 +21,8 @@ object HmrcBuild extends Build {
     "org.joda" % "joda-convert" % "1.7",
     "commons-codec" % "commons-codec" % "1.10",
     "commons-io" % "commons-io" % "2.4",
-    "org.jsoup" % "jsoup" % "1.8.2"
+    "org.jsoup" % "jsoup" % "1.8.2",
+    "org.scalatest" %% "scalatest" % "2.2.4" % "test"
   )
 
   lazy val playBreadcrumb = Project(nameApp, file("."))
