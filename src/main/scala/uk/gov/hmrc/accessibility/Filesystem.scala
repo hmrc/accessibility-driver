@@ -25,11 +25,15 @@ object Filesystem {
   def withFileWriter(directory: String, filename: String)(block: FileWriter => Unit): File = {
     val dir = new File(directory)
     FileUtils.forceMkdir(dir)
-    val file = new File(dir, filename)
-    val out = new FileWriter(file)
+    val outFile = new File(dir, filename)
+    withFileWriter(outFile)(block)
+  }
+
+  def withFileWriter(outFile: File)(block: FileWriter => Unit): File = {
+    val out = new FileWriter(outFile)
     block(out)
     out.flush()
     out.close()
-    file
+    outFile
   }
 }

@@ -16,9 +16,19 @@
 
 package uk.gov.hmrc.accessibility
 
-import org.scalatest.WordSpec
 import org.scalatest._
 
 class AccessibilityToolSpec extends WordSpec with ShouldMatchers {
 
+  "AccessibilityTool.runAccessibilityReport" should {
+    
+    "produce a predefined report" in {
+
+      val file = maybeWriteResourceToTmp("sample-page-1.html")
+      val report = AccessibilityTool.runAccessibilityReport(file)
+      val expected = resourceAsBufferedSource("/sample-report-1.txt").mkString
+      
+      report shouldBe expected
+    }
+  }
 }
