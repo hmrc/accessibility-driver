@@ -92,3 +92,4 @@ Suggested Future Improvements
  * Some tests
  * Parsing of reports so we can get some metrics e.g. number of warnings
  * Dont run reports on the same page twice (check the page md5 hash)
+ * Support for compressed responses
