@@ -31,9 +31,6 @@ object AccessibilityTool {
   for(resource <- Seq("audit.js", "axs_testing.js"))
     maybeWriteResourceToTmp(resource)
 
-  
-
-  
   def runAccessibilityReport(htmlFile: File): String = {
     try {
       val auditJs = (new File(tmpDir, "audit.js")).getAbsolutePath
