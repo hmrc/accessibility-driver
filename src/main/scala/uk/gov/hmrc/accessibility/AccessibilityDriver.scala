@@ -30,20 +30,19 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 class AccessibilityDriver(val port: Int = 8080) extends WebDriver with JavascriptExecutor {
 
+  //Queue to handle intercepted pages
+  val interceptedPages = new QueueStream
+
+  //Start a thread with the proxy server running
+  HttpProxyServerFactory.buildHtmlInterceptingProxy(port, interceptedPages.put).start()
+  
+  //Create a delegate WebDriver
   val profile = new FirefoxProfile()
   profile.setPreference("network.proxy.type", 1)
   profile.setPreference("network.proxy.http", "localhost")
   profile.setPreference("network.proxy.http_port", port)
   profile.setPreference("network.proxy.no_proxies_on", "")
   val delegate = new FirefoxDriver(profile)
-  
-  val interceptedPages = new QueueStream
-
-  //Start a thread with the proxy server running
-  Future {
-    //Run proxy server in main thread (blocking call)
-    HttpProxyServerFactory.buildHtmlInterceptingProxy(port, interceptedPages.put).start()
-  }
 
   val runTime = DateTime.now
   val runStamp = DateTimeFormat.forPattern("yyyyMMddHHmmss").print(runTime)
