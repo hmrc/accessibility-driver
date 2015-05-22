@@ -16,6 +16,8 @@
 
 package uk.gov.hmrc.accessibility
 
+import java.util.regex.Pattern
+
 import org.joda.time.DateTime
 import Filesystem._
 
@@ -26,7 +28,7 @@ object ReportWriter {
   def createAccessibilityReport(runStamp: String, interceptedHtmlPage: InterceptedHtmlPageMessage): Unit = {
 
     val htmlFile = withFileWriter(targetDir+runStamp, interceptedHtmlPage.hash+"-page.html") { writer =>
-      writer.write(interceptedHtmlPage.body)
+      writer.write(addingBaseTag(interceptedHtmlPage.body, interceptedHtmlPage.uri))
     }
 
     val output = AccessibilityTool.runAccessibilityReport(htmlFile)
@@ -82,5 +84,11 @@ object ReportWriter {
     withFileWriter(targetDir+runStamp, "index.html") { writer =>
       writer.write( frames )
     }
+  }
+
+  private def addingBaseTag(html: String, uri: String) = {
+    Pattern.compile( """<head>""", Pattern.CASE_INSENSITIVE)
+      .matcher(html)
+      .replaceFirst( """<head><base href="""" + uri + """">""")
   }
 }

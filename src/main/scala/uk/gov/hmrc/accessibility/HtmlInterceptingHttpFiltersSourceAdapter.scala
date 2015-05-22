@@ -55,7 +55,7 @@ class HtmlInterceptingHttpFiltersSourceAdapter(interceptHandler: InterceptedHtml
             buffers.get(originalRequest) map { rd =>
               rd.bodyAccumulator.append(content.content().toString(CharsetUtil.UTF_8))
               buffers -= originalRequest
-              val body = addingBaseTag(rd.bodyAccumulator.toString(), originalRequest.getUri)
+              val body = rd.bodyAccumulator.toString
               val bodyText = Jsoup.parse(body).text().toString
               val hash = DigestUtils.md5Hex(bodyText)
               interceptHandler( InterceptedHtmlPageMessage(originalRequest.getUri,
@@ -79,9 +79,5 @@ class HtmlInterceptingHttpFiltersSourceAdapter(interceptHandler: InterceptedHtml
   private def extractContentType(response: HttpResponse): Option[String] =
     response.headers().entries().filter(_.getKey.toLowerCase.indexOf("content-type") >= 0).map(_.getValue).headOption
 
-  private def addingBaseTag(html: String, uri: String) = {
-    Pattern.compile( """<head>""", Pattern.CASE_INSENSITIVE)
-      .matcher(html)
-      .replaceFirst( """<head><base href="""" + uri + """">""")
-  }
+
 }
