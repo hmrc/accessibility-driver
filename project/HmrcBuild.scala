@@ -11,7 +11,7 @@ object HmrcBuild extends Build {
   import uk.gov.hmrc.{SbtBuildInfo, ShellPrompt}
 
   val nameApp = "accessibility-driver"
-  val versionApp = "1.2.2"
+  val versionApp = "1.2.2-SNAPSHOT"
 
   val appDependencies = Seq(
     "org.seleniumhq.selenium" % "selenium-java" % "2.45.0",
