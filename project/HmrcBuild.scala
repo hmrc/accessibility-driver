@@ -1,13 +1,10 @@
 import sbt.Keys._
 import sbt._
-import uk.gov.hmrc.DefaultBuildSettings._
-import uk.gov.hmrc.PublishingSettings._
-import uk.gov.hmrc.{SbtAutoBuildPlugin, ShellPrompt, SbtBuildInfo}
 
 object HmrcBuild extends Build {
   import uk.gov.hmrc.DefaultBuildSettings._
+  import uk.gov.hmrc.SbtAutoBuildPlugin
   import uk.gov.hmrc.versioning.SbtGitVersioning
-  import uk.gov.hmrc.{SbtAutoBuildPlugin, SbtBuildInfo}
 
 
   val nameApp = "accessibility-driver"
@@ -25,7 +22,7 @@ object HmrcBuild extends Build {
     "org.scalatest" %% "scalatest" % "2.2.4" % "test"
   )
 
-  lazy val playBreadcrumb = Project(nameApp, file("."))
+  lazy val project = Project(nameApp, file("."))
     .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning)
     .settings(
       targetJvm := "jvm-1.7",
