@@ -16,12 +16,11 @@
 
 package uk.gov.hmrc.accessibility
 
-import java.util.regex.Pattern
-
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.http._
 import io.netty.util.CharsetUtil
 import org.apache.commons.codec.digest.DigestUtils
+import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.littleshoot.proxy.{HttpFiltersAdapter, HttpFilters, HttpFiltersSourceAdapter}
 
@@ -37,7 +36,34 @@ class HtmlInterceptingHttpFiltersSourceAdapter(interceptHandler: InterceptedHtml
   override def filterRequest(originalRequest: HttpRequest, ctx: ChannelHandlerContext): HttpFilters = {
     
     new HttpFiltersAdapter(originalRequest) {
+      
+      override def requestPre(httpObject: HttpObject): HttpResponse = {
 
+        httpObject match {
+          case r: DefaultHttpRequest =>
+            println(s"${DateTime.now} : requestPre: ${httpObject.getClass} : ${r.getMethod} ${r.getUri}")
+          case _ =>
+            println(s"${DateTime.now} : requestPre: ${httpObject.getClass}")
+        }
+        
+        null
+      }
+
+      override def requestPost(httpObject: HttpObject): HttpResponse = {
+        httpObject match {
+          case r: DefaultHttpRequest =>
+            println(s"${DateTime.now} : requestPre: ${httpObject.getClass} : ${r.getMethod} ${r.getUri}")
+          case _ =>
+            println(s"${DateTime.now} : requestPre: ${httpObject.getClass}")
+        }
+        null
+      }
+
+      override def responsePost(httpObject: HttpObject): HttpObject = {
+        println(DateTime.now + ": responsePost: " + httpObject.getClass)
+        httpObject
+      }
+      
       //Handles chunks of an http response, we need to re-build the entire response by intercepting the chunks in this order:
       // HttpResponse (Contains response headers only)
       // HttpContent(s) (May be 0 or more)
@@ -45,6 +71,8 @@ class HtmlInterceptingHttpFiltersSourceAdapter(interceptHandler: InterceptedHtml
       //We re-assemble the response by building up a buffer in the buffers map, keyed on the original request
       //associated with the response
       override def responsePre(httpObject: HttpObject): HttpObject = {
+        println(DateTime.now + ": responsePre: " + httpObject.getClass)
+
         httpObject match {
           case response: HttpResponse =>
             extractContentType(response).filter(_.toLowerCase.indexOf("text/html") >= 0) map { ct =>
