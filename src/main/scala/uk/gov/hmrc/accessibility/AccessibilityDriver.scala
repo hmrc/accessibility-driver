@@ -65,12 +65,7 @@ class AccessibilityDriver(val port: Int = 8080) extends WebDriver with Javascrip
   override def getWindowHandles: util.Set[String] = delegate.getWindowHandles
   override def switchTo(): TargetLocator = delegate.switchTo()
   override def close(): Unit = delegate.close()
-  override def getCurrentUrl: String = {
-    println(DateTime.now + ": Start getCurrentUrl")
-    val u = delegate.getCurrentUrl
-    println(DateTime.now + ": End getCurrentUrl: " + u)
-    u
-  }
+  override def getCurrentUrl: String = delegate.getCurrentUrl
   override def navigate(): Navigation = delegate.navigate()
   override def getTitle: String = delegate.getTitle
   override def findElement(by: By): WebElement = delegate.findElement(by)
