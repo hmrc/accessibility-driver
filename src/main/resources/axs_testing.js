@@ -1982,7 +1982,7 @@ axs.AuditRules.addRule({name:"nonExistentAriaRelatedElement", heading:"ARIA attr
   }
   return !1;
 }, code:"AX_ARIA_02"});
-axs.AuditRules.addRule({name:"pageWithBadTitle", heading:"The web page title should be <= 66 characters, without a '/' or '\' or '-', and without a '.' as its last character", url:"https://github.com/hmrc/accessibility-developer-tools/wiki/Audit-Rules#ax_title_02", severity:axs.constants.Severity.WARNING, relevantElementMatcher:function(a) {
+axs.AuditRules.addRule({name:"pageWithBadTitle", heading:"The web page title should be <= 65 characters, without a '/' or '\' or '-', and without a '.' as its last character", url:"https://github.com/hmrc/accessibility-developer-tools/wiki/Audit-Rules#ax_title_02", severity:axs.constants.Severity.WARNING, relevantElementMatcher:function(a) {
   return "title" == a.tagName.toLowerCase();
 }, test:function(a) {
   a = a.querySelector("head").querySelector("title");
