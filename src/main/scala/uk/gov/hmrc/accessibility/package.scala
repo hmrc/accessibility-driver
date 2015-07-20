@@ -37,9 +37,9 @@ package object accessibility {
   }
 
   
-  def maybeWriteResourceToTmp(resource: String): File = {
+  def maybeWriteResourceToTmp(resource: String, force: Boolean = false): File = {
     val outFile = new File(new File(tmpDir), resource)
-    if( new DateTime(outFile.lastModified()).plusMinutes(tmpMinsTTL).isBefore(DateTime.now) ) {
+    if( new DateTime(outFile.lastModified()).plusMinutes(tmpMinsTTL).isBefore(DateTime.now) || force ) {
       withFileWriter(outFile) { writer =>
         val c = resourceAsBufferedSource(s"/$resource").mkString
         writer.write(c)
