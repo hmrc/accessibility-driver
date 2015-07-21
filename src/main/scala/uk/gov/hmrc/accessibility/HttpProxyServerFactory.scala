@@ -23,9 +23,9 @@ import scala.util.matching.Regex
 
 object HttpProxyServerFactory {
     
-  def buildHtmlInterceptingProxy(port: Int, whiteList: Traversable[Regex],handler: InterceptedHtmlPageMessage => Unit): HttpProxyServerBootstrap = {
+  def buildHtmlInterceptingProxy(port: Int, whiteList: Traversable[Regex], handler: InterceptedHtmlPageMessage => Unit): HttpProxyServerBootstrap = {
     DefaultHttpProxyServer.bootstrap()
       .withPort(port)
-      .withFiltersSource(new HtmlInterceptingHttpFiltersSourceAdapter(handler,whiteList))
+      .withFiltersSource(new HtmlInterceptingHttpFiltersSourceAdapter(handler, whiteList))
   }
 }
