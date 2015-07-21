@@ -29,7 +29,7 @@ object AccessibilityTool {
   val logger = Logger.getLogger(getClass)
 
   for(resource <- Seq("audit.js", "axs_testing.js"))
-    maybeWriteResourceToTmp(resource)
+    maybeWriteResourceToTmp(resource, force = true)
 
   def runAccessibilityReport(htmlFile: File): String = {
     try {
