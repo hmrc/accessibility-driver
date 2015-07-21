@@ -18,7 +18,7 @@ package uk.gov.hmrc.accessibility
 
 import org.scalatest._
 
-class AccessibilityToolSpec extends WordSpec with ShouldMatchers {
+class AccessibilityToolSpec extends WordSpec with ShouldMatchers  {
 
   "AccessibilityTool.runAccessibilityReport" should {
     
@@ -31,4 +31,8 @@ class AccessibilityToolSpec extends WordSpec with ShouldMatchers {
       report shouldBe expected
     }
   }
+
+
+
+
 }

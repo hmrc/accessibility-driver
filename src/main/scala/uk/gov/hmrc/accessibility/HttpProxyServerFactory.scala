@@ -19,11 +19,13 @@ package uk.gov.hmrc.accessibility
 import org.littleshoot.proxy._
 import org.littleshoot.proxy.impl.DefaultHttpProxyServer
 
+import scala.util.matching.Regex
+
 object HttpProxyServerFactory {
     
-  def buildHtmlInterceptingProxy(port: Int, handler: InterceptedHtmlPageMessage => Unit): HttpProxyServerBootstrap = {
+  def buildHtmlInterceptingProxy(port: Int, whiteList: Traversable[Regex],handler: InterceptedHtmlPageMessage => Unit): HttpProxyServerBootstrap = {
     DefaultHttpProxyServer.bootstrap()
       .withPort(port)
-      .withFiltersSource(new HtmlInterceptingHttpFiltersSourceAdapter(handler))
+      .withFiltersSource(new HtmlInterceptingHttpFiltersSourceAdapter(handler,whiteList))
   }
 }

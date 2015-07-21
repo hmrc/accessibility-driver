@@ -26,15 +26,21 @@ import org.openqa.selenium.{JavascriptExecutor, By, WebDriver, WebElement}
 import scala.concurrent.Future
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.matching.Regex
 
+/**
+ *
+ * @param port
+ * @param whiteList
+ */
 
-class AccessibilityDriver(val port: Int = 8080) extends WebDriver with JavascriptExecutor {
+class AccessibilityDriver(val port: Int = 8080, whiteList: Traversable[Regex] = Nil) extends WebDriver with JavascriptExecutor {
 
   //Queue to handle intercepted pages
   val interceptedPages = new QueueStream
 
   //Start a thread with the proxy server running
-  HttpProxyServerFactory.buildHtmlInterceptingProxy(port, interceptedPages.put).start()
+  HttpProxyServerFactory.buildHtmlInterceptingProxy(port,whiteList, interceptedPages.put).start()
   
   //Create a delegate WebDriver
   val profile = new FirefoxProfile()
