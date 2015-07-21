@@ -1982,11 +1982,12 @@ axs.AuditRules.addRule({name:"nonExistentAriaRelatedElement", heading:"ARIA attr
   }
   return !1;
 }, code:"AX_ARIA_02"});
-axs.AuditRules.addRule({name:"pageWithBadTitle", heading:"The web page title should be less than or equal to 65 characters, without a '/' or '\' or '-', and without a '.' as its last character", url:"https://github.com/hmrc/accessibility-developer-tools/wiki/Audit-Rules#ax_title_02", severity:axs.constants.Severity.WARNING, relevantElementMatcher:function(a) {
+axs.AuditRules.addRule({name:"pageWithBadTitle", heading:"The web page should have a title less than 66 characters long and does not contain bad characters", url:"https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#TODO-WIKIENTRY", severity:axs.constants.Severity.WARNING, relevantElementMatcher:function(a) {
   return "title" == a.tagName.toLowerCase();
 }, test:function(a) {
-  a = a.querySelector("head").querySelector("title");
-  return 66 <= a.length || "." === a.slice(-1) || -1 === a.indexOf("-") || -1 === a.indexOf("/") || -1 === a.indexOf("\\") ? !0 : !1;
+  a = a.textContent;
+  var b = /([-/\\]|[.]$)/;
+  return 65 < a.length || b.test(a);
 }, code:"AX_TITLE_02"});
 axs.AuditRules.addRule({name:"pageWithoutTitle", heading:"The web page should have a title that describes topic or purpose", url:"https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#ax_title_01", severity:axs.constants.Severity.WARNING, relevantElementMatcher:function(a) {
   return "html" == a.tagName.toLowerCase();

@@ -24,7 +24,7 @@ class AccessibilityToolSpec extends WordSpec with ShouldMatchers {
     
     "produce a predefined report" in {
 
-      val file = maybeWriteResourceToTmp("sample-page-1.html")
+      val file = maybeWriteResourceToTmp("sample-page-1.html", force = true)
       val report = AccessibilityTool.runAccessibilityReport(file)
       val expected = resourceAsBufferedSource("/sample-report-1.txt").mkString
       
