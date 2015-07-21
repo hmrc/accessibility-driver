@@ -16,11 +16,14 @@ PhantomJS must be installed, e.g.
 Usage
 -----
 
-    val driver = new AccessibilityDriver
+    val driver = new AccessibilityDriver([port for proxy], [uri whitelist])
     
     (run tests)
     
     driver.quit //The quit command triggers the production of the report, make sure you quit the driver after testing
+
+* port for proxy is the port that the internal proxy server will use, default is 8080
+* uri whitelist is a list of regexs that the intercepted web pages will be checked against, accessibility reports are only run against those that match
 
 Reports
 -------
@@ -87,7 +90,7 @@ To enable logging of the underlying proxy server, use the following example conf
 Suggested Future Improvements
 -----------------------------
 
- * Configurable url(s) for report execution, i.e. a whitelisting feature
+
  * Support for other delegate drivers (currently hardcoded to use FirefoxDriver)
  * Some tests
  * Parsing of reports so we can get some metrics e.g. number of warnings

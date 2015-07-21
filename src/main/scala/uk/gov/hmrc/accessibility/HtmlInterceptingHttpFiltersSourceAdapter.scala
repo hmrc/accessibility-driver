@@ -27,13 +27,20 @@ import org.littleshoot.proxy.{HttpFiltersAdapter, HttpFilters, HttpFiltersSource
 
 import scala.collection.mutable
 import scala.collection.JavaConversions._
+import scala.util.matching.Regex
 
-class HtmlInterceptingHttpFiltersSourceAdapter(interceptHandler: InterceptedHtmlPageMessage => Unit) extends HttpFiltersSourceAdapter {
+class HtmlInterceptingHttpFiltersSourceAdapter(interceptHandler: InterceptedHtmlPageMessage => Unit, whiteList: Traversable[Regex]) extends HttpFiltersSourceAdapter {
   
   case class RequestData(contentType: String, bodyAccumulator: mutable.StringBuilder)
   
   val buffers = mutable.Map[HttpRequest, RequestData]()
   
+  
+  def isInWhiteList(uri: String) = whiteList.isEmpty || whiteList.exists( _.findAllIn(uri).nonEmpty )
+  
+  def shouldIntercept(contentType: String) = contentType.toLowerCase.indexOf("text/html") >= 0
+  
+
   override def filterRequest(originalRequest: HttpRequest, ctx: ChannelHandlerContext): HttpFilters = {
     
     new HttpFiltersAdapter(originalRequest) {
@@ -47,10 +54,11 @@ class HtmlInterceptingHttpFiltersSourceAdapter(interceptHandler: InterceptedHtml
       override def responsePre(httpObject: HttpObject): HttpObject = {
         httpObject match {
           case response: HttpResponse =>
-            extractContentType(response).filter(_.toLowerCase.indexOf("text/html") >= 0) map { ct =>
-              buffers(originalRequest) = RequestData(ct, mutable.StringBuilder.newBuilder)
+            extractContentType(response).map { ct =>
+              if( isInWhiteList(originalRequest.getUri) && shouldIntercept(ct) )
+                buffers(originalRequest) = RequestData(ct, mutable.StringBuilder.newBuilder)
             }
-            
+
           case content: LastHttpContent =>
             buffers.get(originalRequest) map { rd =>
               rd.bodyAccumulator.append(content.content().toString(CharsetUtil.UTF_8))

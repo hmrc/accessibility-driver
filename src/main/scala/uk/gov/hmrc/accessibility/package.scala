@@ -22,6 +22,7 @@ import org.joda.time.DateTime
 import uk.gov.hmrc.accessibility.Filesystem._
 
 import scala.io.{Source, BufferedSource}
+import scala.util.matching.Regex
 
 /**
  * Created by nic on 13/05/2015.
@@ -47,4 +48,5 @@ package object accessibility {
     }
     outFile
   }
+
 }
