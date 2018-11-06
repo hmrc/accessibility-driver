@@ -5,6 +5,9 @@ object HmrcBuild extends Build {
   import uk.gov.hmrc.DefaultBuildSettings._
   import uk.gov.hmrc.SbtAutoBuildPlugin
   import uk.gov.hmrc.versioning.SbtGitVersioning
+  import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
+  import uk.gov.hmrc.SbtArtifactory.autoImport.makePublicallyAvailableOnBintray
+  import uk.gov.hmrc.SbtArtifactory
 
 
   val nameApp = "accessibility-driver"
@@ -23,7 +26,7 @@ object HmrcBuild extends Build {
   )
 
   lazy val project = Project(nameApp, file("."))
-    .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning)
+    .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning, SbtArtifactory)
     .settings(
       targetJvm := "jvm-1.7",
       libraryDependencies ++= appDependencies,
@@ -32,6 +35,8 @@ object HmrcBuild extends Build {
       resolvers := Seq(
         "typesafe-releases" at "http://repo.typesafe.com/typesafe/releases/",
         Resolver.bintrayRepo("hmrc", "releases")
-      )
+      ),
+      majorVersion := 1,
+      makePublicallyAvailableOnBintray := true
     )
 }
